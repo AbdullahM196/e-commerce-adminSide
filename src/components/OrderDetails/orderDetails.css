@@ -1,0 +1,17 @@
+strong {
+  font-weight: 600;
+
+  font-size: 18px;
+}
+.orderDetailBody {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+  padding: 10px;
+  hr {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid black;
+  }
+}

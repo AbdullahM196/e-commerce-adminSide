@@ -1,0 +1,9 @@
+.dashboardCards {
+  display: flex;
+  gap: 10px;
+}
+@media only screen and (max-width: 880px) {
+  .dashboardCards {
+    flex-direction: column;
+  }
+}

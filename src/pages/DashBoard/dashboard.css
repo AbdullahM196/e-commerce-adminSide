@@ -1,0 +1,17 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 8px;
+}
+.dashboardBody {
+  display: grid;
+  grid-template-columns: 3.5fr 1fr;
+  gap: 10px;
+}
+
+@media only screen and (max-width: 820px) {
+  .dashboardBody {
+    grid-template-columns: 1fr;
+  }
+}

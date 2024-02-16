@@ -23,7 +23,7 @@ export default function Login() {
       MySwal.fire({
         icon: "error",
         title: "Oops...",
-        text: error.data,
+        text: error.data.message,
       });
       console.log(error);
     }

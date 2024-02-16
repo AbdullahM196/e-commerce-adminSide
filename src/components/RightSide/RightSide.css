@@ -21,6 +21,22 @@
 .growth {
   max-width: 100% !important;
 }
+@media only screen and (max-width: 1380px) {
+  .RightSide {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .users-card {
+    flex: 0 0 50%; /* flex-grow: 0; flex-shrink: 0; flex-basis: 50%; */
+  }
+  .orderGrowth {
+    flex: 0 0 50%; /* flex-grow: 0; flex-shrink: 0; flex-basis: 50%; */
+  }
+  .growth {
+    width: 100% !important;
+  }
+}
 @media only screen and (max-width: 850px) {
   .RightSide {
     width: 100% !important;

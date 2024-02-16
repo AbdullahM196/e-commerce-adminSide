@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
+
 import SideBar from "./components/sideBar/SideBar";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";

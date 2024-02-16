@@ -89,7 +89,7 @@ export default function Customers() {
     <div className="customerPage w-100">
       <h1>Customers</h1>
       <div className="customer-body">
-        <div className="customerHeader">
+        <div className="customerHeader w-100">
           {chart}
           {userCard}
         </div>

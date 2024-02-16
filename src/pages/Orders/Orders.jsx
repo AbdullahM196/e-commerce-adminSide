@@ -81,15 +81,16 @@ export default function Orders() {
       };
     }
   }, [soledCategoryData, soldCategorySuccess]);
-  console.log(mostSoledCategory);
   return (
     <div className="ordersPage">
       <h1>Orders</h1>
-      <div className="OrdersHeader">
-        {orderGrowthChart}
-        <PieChart data={mostSoledCategory} />
+      <div className="ordersBody">
+        <div className="OrdersHeader">
+          {orderGrowthChart}
+          <PieChart data={mostSoledCategory} />
+        </div>
+        <RecentOrders />
       </div>
-      <RecentOrders />
     </div>
   );
 }

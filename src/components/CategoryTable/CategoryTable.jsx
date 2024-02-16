@@ -13,7 +13,7 @@ export default function CategoryTable({
     handleShow();
   }
   return (
-    <Table className="w-100 h-100" hover variant="light" responsive>
+    <Table hover variant="light" responsive>
       <thead>
         <tr>
           <th>#</th>

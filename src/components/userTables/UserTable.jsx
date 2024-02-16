@@ -45,7 +45,7 @@ export default function UserTable({ data, mostAct }) {
     }
   }
   return (
-    <Table className="customerTable w-100" hover variant="light" responsive>
+    <Table hover variant="light" responsive>
       <thead>
         <tr>
           <th>#</th>

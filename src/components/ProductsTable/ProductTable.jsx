@@ -58,78 +58,76 @@ export default function ProductTable({ page }) {
     return <ErrorFetching error={error} />;
   } else if (isSuccess) {
     return (
-      <>
-        <Table hover responsive className="productTable">
-          <thead>
-            <tr style={{ height: "48px" }}>
-              <th>#</th>
-              <th>Quantity</th>
-              <th>Img</th>
-              <th>Title</th>
-              <th>SubCategory</th>
-              <th>Price</th>
-              <th>Actions </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((product, index) => {
-              return (
-                <tr key={product._id}>
-                  <td>{index + 1}</td>
-                  <td>{product.quantity}</td>
-                  <td>
-                    <img
-                      src={
-                        product.img
-                          ? product.img.url
-                          : "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80"
-                      }
-                      alt="product"
-                      className="productImg"
-                    />
-                  </td>
-                  <td style={{ width: "500px" }}>
-                    {product.title.substring(0, 53)}
-                  </td>
-                  <td>{product.subCategory.name}</td>
-                  <td>{product.price.new.toFixed(1)}</td>
-                  <td className="d-flex  align-items-center w-100 h-100">
-                    <BsFillTrashFill
-                      className="text-danger me-3"
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setProductId(product._id);
-                        handleDelete();
-                      }}
-                    />
-                    <MdModeEdit
-                      className="text-success"
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        setShow(true);
-                        setProduct(product);
-                      }}
-                    />
-                  </td>
-                  <ProductsForm
-                    show={show}
-                    setShow={setShow}
-                    product={editProduct}
+      <Table hover responsive className="productTable">
+        <thead>
+          <tr style={{ height: "48px" }}>
+            <th>#</th>
+            <th>Quantity</th>
+            <th>Img</th>
+            <th>Title</th>
+            <th>SubCategory</th>
+            <th>Price</th>
+            <th>Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((product, index) => {
+            return (
+              <tr key={product._id}>
+                <td>{index + 1}</td>
+                <td>{product.quantity}</td>
+                <td>
+                  <img
+                    src={
+                      product.img
+                        ? product.img.url
+                        : "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80"
+                    }
+                    alt="product"
+                    className="productImg"
                   />
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </>
+                </td>
+                <td style={{ width: "500px" }}>
+                  {product.title.substring(0, 53)}
+                </td>
+                <td>{product.subCategory.name}</td>
+                <td>{product.price.new.toFixed(1)}</td>
+                <td className="d-flex">
+                  <BsFillTrashFill
+                    className="text-danger me-3"
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setProductId(product._id);
+                      handleDelete();
+                    }}
+                  />
+                  <MdModeEdit
+                    className="text-success"
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setShow(true);
+                      setProduct(product);
+                    }}
+                  />
+                </td>
+                <ProductsForm
+                  show={show}
+                  setShow={setShow}
+                  product={editProduct}
+                />
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
     );
   }
 }

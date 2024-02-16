@@ -1,4 +1,3 @@
-import Table from "react-bootstrap/Table";
 import "./recentOrders.css";
 import {
   selectOrderData,
@@ -6,19 +5,20 @@ import {
 } from "../../store/API/apiSlices/Orders";
 import Loading from "../loading/Loading";
 import ErrorFetching from "../Error/ErrorFetching";
+import { useSelector } from "react-redux";
+import { Table } from "react-bootstrap";
 import { format, parseISO } from "date-fns";
 import { useEffect, useState } from "react";
-import OrderDetails from "../OrderDetails/OrdrDetails";
 import { useChangeOrderStatusMutation } from "../../store/API/apiSlices/Orders";
-import { useSelector } from "react-redux";
+import OrderDetails from "../OrderDetails/OrdrDetails";
 export default function RecentOrders() {
   const orders = useSelector(selectOrderData);
+  const { isLoading, error, isSuccess, isError } = useGetAllOrdersQuery();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [orderDetail, SetOrderDetail] = useState(null);
-  useEffect(() => {
-    if (orderDetail !== null) {
-      handleShow();
-    }
-  }, [orderDetail]);
+  const [changeOrderStatus] = useChangeOrderStatusMutation();
   const allOrderStatus = [
     "Pending",
     "Processing",
@@ -26,11 +26,15 @@ export default function RecentOrders() {
     "Delivered",
     "Cancelled",
   ];
+  useEffect(() => {
+    if (orderDetail !== null) {
+      handleShow();
+    }
+  }, [orderDetail]);
   const [orderState, setOrderStatus] = useState({
     id: "",
     status: "",
   });
-  const [changeOrderStatus] = useChangeOrderStatusMutation();
   function changeStatus(evt, id) {
     setOrderStatus({
       id: id,
@@ -53,12 +57,6 @@ export default function RecentOrders() {
       setState();
     }
   }, [orderState, changeOrderStatus]);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const { isLoading, error, isSuccess, isError } = useGetAllOrdersQuery();
   if (isLoading) {
     return <Loading />;
   } else if (isError) {
@@ -67,8 +65,7 @@ export default function RecentOrders() {
     return (
       <div className="RecentOrders">
         <h2 className="my-4">Recent Orders</h2>
-
-        <Table hover responsive>
+        <Table className="w-100" striped bordered hover responsive>
           <thead>
             <tr>
               <th>Product</th>
@@ -106,17 +103,12 @@ export default function RecentOrders() {
                   <td>
                     <select
                       className="status delivered form-select"
-                      // value={orderState.status}
                       onChange={(evt) => changeStatus(evt, order._id)}
                       defaultValue={order.status}
                     >
                       {allOrderStatus.map((status, index) => {
                         return (
-                          <option
-                            key={index}
-                            value={status}
-                            // selected={order.status === status}
-                          >
+                          <option key={index} value={status}>
                             {status}
                           </option>
                         );
@@ -133,18 +125,18 @@ export default function RecentOrders() {
                     >
                       Details
                     </button>
-                    {orderDetail && (
-                      <OrderDetails
-                        show={show}
-                        handleClose={handleClose}
-                        order={orderDetail}
-                      />
-                    )}
                   </td>
                 </tr>
               );
             })}
           </tbody>
+          {orderDetail && (
+            <OrderDetails
+              show={show}
+              handleClose={handleClose}
+              order={orderDetail}
+            />
+          )}
         </Table>
       </div>
     );

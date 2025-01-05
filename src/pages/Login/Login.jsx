@@ -6,6 +6,7 @@ import { Spinner } from "react-bootstrap";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../store/API/apiSlices/user";
 import { useState } from "react";
+import HelmetMetaTags from "../../components/MetaTags/HelmetMetaTags";
 export default function Login() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
@@ -39,6 +40,11 @@ export default function Login() {
         backgroundColor: "#f0f0f0",
       }}
     >
+      <HelmetMetaTags
+        title="Auth"
+        content="Login to get access to our website."
+        url="/login"
+      />
       <div className="login-container">
         <div className="login-header">
           <div>Login</div>

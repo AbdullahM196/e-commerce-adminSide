@@ -1,7 +1,8 @@
 import { Col, Form, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
+import React from "react";
 
-export default function Others({
+const Others = React.memo(function ({
   ImgUrl,
   setImgUrl,
   imgUrlBlur,
@@ -56,7 +57,10 @@ export default function Others({
       </Form.Group>
     </>
   );
-}
+});
+
+Others.displayName = "Others";
+export default Others;
 Others.propTypes = {
   ImgUrl: PropTypes.string,
   quantity: PropTypes.string,

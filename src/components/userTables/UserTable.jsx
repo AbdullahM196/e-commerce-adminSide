@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useDeleteUserMutation } from "../../store/API/apiSlices/user";
-export default function UserTable({ data, mostAct }) {
+import React from "react";
+const UserTable = React.memo(function ({ data, mostAct }) {
   function getOrders(userId) {
-    const findOrders = mostAct.find((user) => user._id == userId);
+    const findOrders = mostAct?.find((user) => user._id == userId);
     if (!findOrders) {
       return 0;
     } else if (findOrders) {
@@ -78,7 +79,10 @@ export default function UserTable({ data, mostAct }) {
       </tbody>
     </Table>
   );
-}
+});
+
+UserTable.displayName = "UserTable";
+export default UserTable;
 
 UserTable.propTypes = {
   data: PropTypes.array,

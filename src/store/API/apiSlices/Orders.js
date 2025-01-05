@@ -3,7 +3,7 @@ import { createSelector } from "@reduxjs/toolkit";
 export const OrderSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllOrders: builder.query({
-      query: () => "/order/getAllOrders",
+      query: () => "/order/getAllOrders/",
       providesTags: ["Orders"],
     }),
     changeOrderStatus: builder.mutation({
@@ -27,7 +27,7 @@ export const OrderSlice = apiSlice.injectEndpoints({
     mostActiveCustomer: builder.query({
       query: () => "/order/mostActiveUser",
       transformResponse: (res) => {
-        return res;
+        return res.mostActiveCustomers;
       },
     }),
     mostSoldProducts: builder.query({
@@ -47,7 +47,7 @@ export const selectOrderData = createSelector(
 const orderStatics = OrderSlice.endpoints.orderStatistics.select();
 export const selectOrderStatics = createSelector(
   orderStatics,
-  (order) => order.data
+  (order) => order?.data
 );
 
 export const {

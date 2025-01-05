@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import OrderGrowth from "../Charts/LineChart";
-import {
-  SelectAllUsers,
-  useGetAllCustomerQuery,
-} from "../../store/API/apiSlices/user";
+import { SelectAllUsers } from "../../store/API/apiSlices/user";
 import "./RightSide.css";
 import UserCards from "../usersCards/UserCards";
-import Loading from "../loading/Loading";
-import ErrorFetching from "../Error/ErrorFetching";
 import {
   selectOrderStatics,
   useOrderStatisticsQuery,
@@ -15,18 +10,8 @@ import {
 import { useSelector } from "react-redux";
 export default function RightSide() {
   const orderStatics = useSelector(selectOrderStatics);
-  const { isLoading, isSuccess, isError, error } = useGetAllCustomerQuery();
   const customers = useSelector(SelectAllUsers);
-  let content;
-  if (isLoading) {
-    content = <Loading />;
-  }
-  if (isSuccess) {
-    content = <UserCards data={customers} />;
-  }
-  if (isError) {
-    content = <ErrorFetching error={error} />;
-  }
+
   const { isSuccess: ordersSuccess } = useOrderStatisticsQuery();
   const [orderData, setOrderData] = useState({
     labels: [],
@@ -58,13 +43,13 @@ export default function RightSide() {
     <div className="RightSide">
       <div className="newUsers">
         <h3 className="fw-bold">New Customers</h3>
-        <div className="users-card">{content}</div>
+        <div className="users-card">
+          <UserCards data={customers} />
+        </div>
       </div>
       <div className="orderGrowth my-3">
         <h3 className="fw-bold">Order Growth</h3>
-        <div className="growth">
-          {ordersSuccess && <OrderGrowth data={orderData} />}
-        </div>
+        <div className="growth">{<OrderGrowth data={orderData} />}</div>
       </div>
     </div>
   );

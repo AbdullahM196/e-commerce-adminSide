@@ -73,6 +73,25 @@ html {
     height: 100%;
   }
 }
+.error {
+  margin: 2rem;
+  padding: 1rem;
+  background-color: whitesmoke;
+  font-size: 1.5rem;
+}
+
+.error > pre {
+  color: firebrick;
+  font-size: 1rem;
+}
+
+.error > button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
 @media only screen and (max-width: 520px) {
   .body {
     width: 100%;

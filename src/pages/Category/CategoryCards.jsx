@@ -1,7 +1,5 @@
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import "./category.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import {
   useAddNewCategoryMutation,
@@ -13,9 +11,9 @@ import Loading from "../../components/loading/Loading";
 import { useAddSubCategoryMutation } from "../../store/API/apiSlices/SubCategory";
 import ErrorFetching from "../../components/Error/ErrorFetching";
 import PropTypes from "prop-types";
-import { FaCamera } from "react-icons/fa";
+import CategoryModel from "../../components/categoryModel/CategoryModel";
 
-export default function CategoryCards({ color, title }) {
+const CategoryCards = React.memo(function ({ color, title }) {
   const {
     isLoading: allCategoriesLoading,
     data: allCategories,
@@ -119,75 +117,27 @@ export default function CategoryCards({ color, title }) {
         </div>
         <div className="cardFooter">Click to Add New {title}</div>
       </div>
-      <Modal
+      <CategoryModel
         show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {title == "Category" ? (
-            <Form.Control
-              size="lg"
-              type="text"
-              placeholder="Add Category Name"
-              value={categoryName}
-              onChange={(evt) => {
-                setCatName(evt.target.value);
-              }}
-            />
-          ) : (
-            <>
-              {allCategory()}
-              <span className="d-flex align-items-center gap-2">
-                <Form.Control
-                  className="mt-4"
-                  size="lg"
-                  type="text"
-                  placeholder="Add SubCategory Name"
-                  value={subCategoryName}
-                  onChange={(evt) => {
-                    setSubCatName(evt.target.value);
-                  }}
-                />
-                <label htmlFor="camera">
-                  <FaCamera className="mt-2 text-success" />
-                  <input
-                    type="file"
-                    id="camera"
-                    style={{ display: "none" }}
-                    onChange={(evt) => {
-                      setSubCatImg(evt.target.files[0]);
-                    }}
-                  />
-                </label>
-              </span>
-            </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
-            Close
-          </Button>
-          {isLoading || loading ? (
-            <Loading />
-          ) : (
-            <Button
-              variant="primary"
-              onClick={title == "Category" ? addCategory : addNewSubCategory}
-            >
-              Save
-            </Button>
-          )}
-        </Modal.Footer>
-      </Modal>
+        handleClose={handleClose}
+        title={title}
+        categoryName={categoryName}
+        setCatName={setCatName}
+        setSubCatName={setSubCatName}
+        allCategory={allCategory}
+        subCategoryName={subCategoryName}
+        setSubCatImg={setSubCatImg}
+        isLoading={isLoading}
+        loading={loading}
+        addCategory={addCategory}
+        addNewSubCategory={addNewSubCategory}
+      />
     </>
   );
-}
+});
 CategoryCards.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
 };
+CategoryCards.displayName = "CategoryCards";
+export default CategoryCards;

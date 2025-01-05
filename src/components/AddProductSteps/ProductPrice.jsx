@@ -1,6 +1,7 @@
 import { Col, Form, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
-export default function ProductPrice({
+import React from "react";
+const ProductPrice = React.memo(function ({
   price,
   setPrice,
   priceBlur,
@@ -83,7 +84,10 @@ export default function ProductPrice({
       </Row>
     </>
   );
-}
+});
+
+ProductPrice.displayName = "ProductPrice";
+export default ProductPrice;
 ProductPrice.propTypes = {
   price: PropTypes.object.isRequired,
   setPrice: PropTypes.func.isRequired,

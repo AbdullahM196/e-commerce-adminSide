@@ -1,9 +1,10 @@
+import React from "react";
 import "./mainCard.css";
 import PropTypes from "prop-types";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { FormattedNumber } from "react-intl";
-export default function MainCard({
+const MainCard = React.memo(function ({
   color,
   percent,
   title,
@@ -35,7 +36,10 @@ export default function MainCard({
       </div>
     </div>
   );
-}
+});
+
+MainCard.displayName = "MainCard";
+export default MainCard;
 MainCard.propTypes = {
   color: PropTypes.string,
   percent: PropTypes.number,

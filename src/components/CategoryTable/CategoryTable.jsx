@@ -1,6 +1,7 @@
 import { Table } from "react-bootstrap";
 import PropTypes from "prop-types";
-export default function CategoryTable({
+import React from "react";
+const CategoryTable = React.memo(function ({
   data,
   setCategoryId,
   setCatName,
@@ -51,8 +52,10 @@ export default function CategoryTable({
       </tbody>
     </Table>
   );
-}
+});
 
+CategoryTable.displayName = "CategoryTable";
+export default CategoryTable;
 CategoryTable.propTypes = {
   data: PropTypes.array.isRequired,
   setCategoryId: PropTypes.func.isRequired,

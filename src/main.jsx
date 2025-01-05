@@ -19,15 +19,8 @@ import Login from "./pages/Login/Login.jsx";
 import ProtectRoute from "./pages/ProtectRoute.jsx";
 import Category from "./pages/Category/Category.jsx";
 import Offers from "./pages/Offers/Offers.jsx";
-import { productsSlice } from "./store/API/apiSlices/productsSlice.js";
 import Products from "./pages/Products/Products.jsx";
-import { OrderSlice } from "./store/API/apiSlices/Orders.js";
-import { userSlice } from "./store/API/apiSlices/user.js";
-import { subCategorySlice } from "./store/API/apiSlices/SubCategory.js";
-store.dispatch(productsSlice.endpoints.getAllProducts.initiate());
-store.dispatch(subCategorySlice.endpoints.getAllSubCategories.initiate());
-store.dispatch(OrderSlice.endpoints.getAllOrders.initiate());
-store.dispatch(userSlice.endpoints.getAllCustomer.initiate());
+import { HelmetProvider } from "react-helmet-async";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,7 +44,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <IntlProvider locale="en">
-        <RouterProvider router={router} />
+        <HelmetProvider>
+          <RouterProvider router={router} />
+        </HelmetProvider>
       </IntlProvider>
     </Provider>
   </React.StrictMode>

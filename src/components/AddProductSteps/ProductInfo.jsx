@@ -8,7 +8,8 @@ import Loading from "../loading/Loading";
 import ErrorFetching from "../Error/ErrorFetching";
 
 import { useSelector } from "react-redux";
-export default function ProductInfo({
+import React from "react";
+const ProductInfo = React.memo(function ({
   title,
   setTitle,
   titleBlur,
@@ -139,7 +140,10 @@ export default function ProductInfo({
       ))}
     </>
   );
-}
+});
+
+ProductInfo.displayName = "ProductInfo";
+export default ProductInfo;
 ProductInfo.propTypes = {
   title: PropTypes.string.isRequired,
   setTitle: PropTypes.func.isRequired,

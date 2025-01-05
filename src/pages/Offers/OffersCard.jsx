@@ -51,7 +51,15 @@ export default function OfferCards({
     <>
       <div className="offerCard">
         <div className="LiftSide">
-          <img src={item.img.url ? item.img.url : ""} alt={item.title} />
+          <img
+            src={item.img.url ? item.img.url : ""}
+            alt={item.title}
+            className="w-100 h-100"
+            width={"auto"}
+            height={"auto"}
+            title={item.title}
+            loading="eager"
+          />
         </div>
         <div className="RightSide">
           <p className="title">

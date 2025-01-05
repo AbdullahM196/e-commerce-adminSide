@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BarChart from "../../components/Charts/BarChart";
 import "./products.css";
 import ProductTable from "../../components/ProductsTable/ProductTable";
@@ -6,29 +6,38 @@ import ProductsForm from "./ProductsForm";
 import { useGetAllPagesQuery } from "../../store/API/apiSlices/productsSlice";
 import Pagination from "react-bootstrap/Pagination";
 import { useMostSoldProductsQuery } from "../../store/API/apiSlices/Orders";
+import HelmetMetaTags from "../../components/MetaTags/HelmetMetaTags";
 
-export default function Products() {
-  const { data: mostSold, isSuccess: mostSoldSuccess } =
+const Products = React.memo(function () {
+  const { data: mostSoldData, isSuccess: mostSoldSuccess } =
     useMostSoldProductsQuery();
+  const mostSold = useMemo(
+    () => (mostSoldSuccess ? mostSoldData : []),
+    [mostSoldData, mostSoldSuccess]
+  );
+
   const { data, isSuccess } = useGetAllPagesQuery();
 
   const [active, setActive] = useState(1);
 
-  let items = [];
-  if (isSuccess) {
-    const pageCount = Math.ceil(data);
-    for (let number = 1; number <= pageCount; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          onClick={() => setActive(number)}
-          active={number === active}
-        >
-          {number}
-        </Pagination.Item>
-      );
+  const items = useMemo(() => {
+    let items = [];
+    if (isSuccess) {
+      const pageCount = Math.ceil(data);
+      for (let number = 1; number <= pageCount; number++) {
+        items.push(
+          <Pagination.Item
+            key={number}
+            onClick={() => setActive(number)}
+            active={number === active}
+          >
+            {number}
+          </Pagination.Item>
+        );
+      }
     }
-  }
+    return items;
+  }, [isSuccess, data, active]);
 
   const [show, setShow] = useState(false);
   const [MostSoledProducts, setMostSoledProducts] = useState({
@@ -37,13 +46,14 @@ export default function Products() {
   });
   useEffect(() => {
     setMostSoledProducts({
-      labels: mostSoldSuccess
-        ? mostSold.map((data) => data?.productDetail?.title.substring(0, 15))
-        : [],
+      labels: mostSold?.map((data) =>
+        data?.productDetail?.title.substring(0, 15)
+      ),
+
       datasets: [
         {
           label: "Order Growth",
-          data: mostSoldSuccess ? mostSold.map((data) => data.count) : [],
+          data: mostSold?.map((data) => data.count),
           backgroundColor: [
             "rgba(75,192,192,1)",
             "#ecf0f1",
@@ -59,7 +69,13 @@ export default function Products() {
   }, [mostSold, mostSoldSuccess]);
   return (
     <div className="container-fluid w-100 d-flex flex-column">
-      <h1>Products</h1>
+      <HelmetMetaTags
+        title="Products"
+        content="Look at our Products and edit them."
+        path="/products"
+      />
+
+      <h1>Preview and Manage Products</h1>
       <div className="productsBody">
         <div className="productHeader">
           <BarChart data={MostSoledProducts} />
@@ -85,4 +101,6 @@ export default function Products() {
       </div>
     </div>
   );
-}
+});
+Products.displayName = "Products";
+export default Products;

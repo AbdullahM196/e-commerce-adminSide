@@ -39,6 +39,7 @@ export const userSlice = apiSlice.injectEndpoints({
     getUsersData: builder.query({
       query: () => "/user/userData",
       transformResponse: (res) => {
+        console.log({ res });
         return res;
       },
       providesTags: ["userData"],
